@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>개발_260928-261014</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="3ddff9a7-d739-807e-9661-dcfd1dfd24cb" class="page sans"><header><h1 class="page-title" dir="auto">개발_260928-261014</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="3f9ff9a7-d739-8070-b87b-e768e4af1d76" class="" dir="auto">선행 연구 및 배경 (FLYnn)<div class="indented"><ul id="429a5c91-fcab-4025-bd94-876991245351" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>생물학적 신경망 기반 로보틱스:</strong><ul id="685b58c6-abd8-4d43-860b-59a577aedb42" class="bulleted-list" dir="auto"><li style="list-style-type:circle">초파리의 중추신경계(CNS) 및 뇌 구조(예: MANC, 혜성 신경망 데이터)를 인공 신경망(RNN 등)으로 변환하여 저전력 에이전트에 이식하려는 시도들이 진행 중임.</li></ul></li></ul><ul id="00b02b11-46db-40fd-b718-1635f317645e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>기존 비전 모델(VLM/VLA)과의 차별점:</strong><ul id="fedfedec-6e7b-4421-a449-345b7cddce41" class="bulleted-list" dir="auto"><li style="list-style-type:circle">기존 비전-언어-행동 모델들은 연산량과 토큰 소비가 너무 커 라즈베리 파이 같은 소형 기기 구동이 불가능함.</li></ul><ul id="adffc405-d894-417e-9d7e-6c4329287555" class="bulleted-list" dir="auto"><li style="list-style-type:circle">생물학적 신경 회로의 경로 압축 및 경량화를 통해 초저전력·실시간 제어가 가능한 대체재를 모색하는 선행 접근법을 바탕으로 함.</li></ul></li></ul></div></p><p id="3f9ff9a7-d739-8038-86e4-c1326a1cb2cc" class="" dir="auto">핵심 연구 목표 및 전제 조건</p><p id="3f9ff9a7-d739-805d-b464-eb7cd2ccdc28" class="" dir="auto">연구 목표<div class="indented"><blockquote id="a8618e09-68c9-4414-8bf3-65d8c146aa16" class="" dir="auto"><strong>&quot;거대한 AI 모델(VLM/VLA) 대신, 초파리 신경망 구조를 이식해 연산량과 토큰 소비를 대폭 줄인 경량 로봇 제어 시스템을 구현한다.&quot;</strong></blockquote></div></p><p id="3f9ff9a7-d739-8025-9047-f1b172e6db1f" class="" dir="auto">전제 조건 및 개발 환경<div class="indented"><ul id="4cfa8f7f-2895-4635-afc6-feea7a6dcf71" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>최종 하드웨어 목표:</strong> 라즈베리 파이 4 (Raspberry Pi 4) 구동</li></ul><ul id="73a95c8a-50d3-4c3c-9310-647326521ac1" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>현재 개발 환경:</strong> 데스크탑 환경에서 시뮬레이션 및 모델 검증 진행 중</li></ul><ul id="29c91715-03a2-4f1a-a622-d7f018c2e842" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>효율성 검증:</strong> 일반적인 VLM/VLA 대비 현저히 낮은 연산량 및 토큰 소비 달성</li></ul></div></p><p id="3f9ff9a7-d739-8087-8803-e0bbcb6b7bd4" class="" dir="auto">데이터셋 및 핵심 가설<div class="indented"><ul id="db0b2411-79fd-4bc2-856a-d9927603e601" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>사용 데이터셋:</strong> Male CNS / MANC (Male Adult Nerve Cord)</li></ul><ul id="70f204c0-d817-4c4f-b263-f43084e8dcc9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">뉴런 수: 166.7k</li></ul><ul id="0a21a95b-b630-4747-b8dd-31b775b2b307" class="bulleted-list" dir="auto"><li style="list-style-type:disc">포함 데이터: 시냅스 갯수, 신경전달물질 예측값 등</li></ul><ul id="ccb186d8-302d-40ce-8826-0d109d8312d5" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>연구 가설:</strong><ul id="21e20a1a-88c5-4617-8e5b-e2251fb1564f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">시각 신경부터 운동 신경에르는 전체 CNS 중 핵심이 되는 주요 신경 경로(Pathway)만 추출해도 정상적인 에이전트 동작이 가능할 것이다.</li></ul></li></ul><blockquote id="3b6b0641-47fb-4ac8-9f20-91d1566cce79" class="" dir="auto"><figure id="3f9ff9a7-d739-80a1-8f90-db739a864fc8" class="image" data-notion-image="16c9b82c392e38bd091c725f294a0b46.jpg" dir="ltr"><a href="16c9b82c392e38bd091c725f294a0b46.jpg"><img style="width:544.9791870117188px" src="16c9b82c392e38bd091c725f294a0b46.jpg"/></a></figure><p id="7dd57a92-bed0-4d74-9850-66f314d4a432" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default"><code>Male CNS 전체 커넥톰 구조 (16.6만 개 뉴런)</code></mark></p></blockquote></div></p><p id="3f9ff9a7-d739-80d9-a587-e10c536ffeb6" class="" dir="auto">실험 설계<div class="indented"><ol type="1" id="4bc41acb-4fa4-4a0b-be52-ed9b8808df6e" class="numbered-list" start="1" dir="auto"><li><strong>시뮬레이션 환경 (MuJoCo):</strong></li></ol><ul id="86b05f8c-b90e-4921-99fc-3cbe8afbea6b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">가상 에이전트 배치 및 카메라 픽셀과 광수용체(Receptor) 1:1 매핑</li></ul><ol type="1" id="b824b34a-ddd8-43f6-91b0-c408c36bfca2" class="numbered-list" start="1" dir="auto"><li><strong>신경 연산 및 기록:</strong><ul id="bca45f5e-f37d-4b59-9228-e9bd5f23ca1e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">시각 자극(밝기, 움직임) 부여 후 전체 CNS(VNS 포함) 계산 및 반응 기록</li></ul></li></ol><ol type="1" id="de6852bf-175b-4f50-91ae-2d82efbffcb9" class="numbered-list" start="2" dir="auto"><li><strong>경로 역추적:</strong></li></ol><ul id="0169b901-b90f-494a-9b1f-6bcf7982c4c9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">하행 신경(운동 신경) 또는 시각 신경 시작부부터 역방향으로 탐색하여 주요 경로 추출</li></ul><ol type="1" id="604a9254-6b7c-46a3-9e55-829029ee8ff1" class="numbered-list" start="1" dir="auto"><li><strong>비교 실험 (광수용체 매핑 vs 단순 평균):</strong><ul id="cd5755e6-4a52-418d-9b19-54dd0721e8eb" class="bulleted-list" dir="auto"><li style="list-style-type:disc">광수용체 연결 없이 빛의 평균값만으로 동일한 기능 수행이 가능한지 검증</li></ul></li></ol><blockquote id="d01019a0-337c-41af-8584-98ee66942504" class="" dir="auto"><figure id="3f9ff9a7-d739-8082-989a-f4b12ce7180d" class="image" data-notion-image="image.png" dir="ltr"><a href="image.png"><img style="width:544.9791870117188px" src="image.png"/></a></figure></blockquote><p id="74159f9c-61f1-4f99-8e36-f7aec241ffdf" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default"><code>MuJoCo 시뮬레이션 내 시각 자극 및 운동 제어 테스트</code></mark></p></div></p><p id="3f9ff9a7-d739-8062-84e5-f0ed2a44f16c" class="" dir="auto"> 실험 결과 (진행 중)</p><table id="33c70073-54df-493c-b511-48cb103f4e36" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="ab34efc6-36ab-456b-b836-08937aaff123" dir="ltr"><th id="SaFu" class="simple-table-header-color simple-table-header">구분</th><th id="|?rE" class="simple-table-header-color simple-table-header">결과</th><th id="OesK" class="simple-table-header-color simple-table-header">상세 내용</th></tr></thead><tbody><tr id="dfac88b5-429f-4a2f-afe0-9a47b18378d2" dir="ltr"><td id="SaFu" class=""><strong>빛 평균값 입력</strong></td><td id="|?rE" class=""><strong>실패</strong></td><td id="OesK" class="">광수용체 연동 없이 단순 빛 평균 입력 시, 좌우 입력이 비슷하게 들어와 <strong>물체 및 움직임 감지 불가 (정밀 광수용체 맵핑 필수)</strong></td></tr><tr id="929c4b1b-8a0a-4109-aa47-d0d46e385139" dir="ltr"><td id="SaFu" class=""><strong>신경 경로 탐색</strong></td><td id="|?rE" class=""><strong>성공</strong></td><td id="OesK" class="">전체 CNS 구조 내에서 유의미한 주요 전달 경로 찾기 성공</td></tr><tr id="3c946b9c-73ef-40a4-b751-0d6ad10679fb" dir="ltr"><td id="SaFu" class=""><strong>신경 누락 검증</strong></td><td id="|?rE" class=""><strong>진행 중</strong></td><td id="OesK" class="">신경 다발이거나 신호가 약해 경로에서 제외된 부분 중 필수적인 제어 요소가 포함되어 있는지 검증 중</td></tr></tbody></table><p id="3f9ff9a7-d739-803f-8638-f42f31bdfbff" class="" dir="auto">하드웨어 및 시스템 과제<div class="indented"><p id="3f9ff9a7-d739-80fb-9aa3-d648ecfd0cf1" class="" dir="auto">하드웨어 및 구현 과제 (최종 라즈베리 파이 타겟)<div class="indented"><ul id="b6356407-57a1-4d21-a0ce-1a8efb7b424a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>모터 제어:</strong> 동일 모터 2개만으로 정밀한 이동 및 주행 구현이 가능한가?</li></ul><ul id="72ef56cc-ff29-4e15-bf6a-e9f9700ce649" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>시스템 구조:</strong> 카메라 위치 및 CNS 데이터 연결 방식, 안정적인 전원 공급 방식 설계</li></ul></div></p><p id="3f9ff9a7-d739-80c4-a167-ea0ddb43f0a0" class="" dir="auto">LLM과 초파리 CNS의 역할 분담<div class="indented"><blockquote id="e6fef2eb-8138-46df-bfd3-aff9d6331b35" class="" dir="auto">만약 LLM이 중추신경계(VNS) 역할까지 전면 대체한다면 기존 VLM/VLA와 차별점이 없으므로 명확한 역할 분담이 필수적입니다.</blockquote><ul id="c2612128-d0b6-459a-a2b3-d192cd9fd45c" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>LLM (상위 제어):</strong> 목적성 부여 (<mark class="highlight-default" data-notion-highlight="default"><code>1차 목표: 빛/특정 물체 추적</code></mark><mark class="highlight-default" data-notion-highlight="default">, </mark><mark class="highlight-default" data-notion-highlight="default"><code>2차 목표: 설정된 목표 추적</code></mark>)</li></ul><ul id="ac6db634-c366-4de9-b991-9fc6dd046c98" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>CNS / RNN (하위 제어):</strong> 시각 자극 기반 실시간 모터 반응 및 운동 제어</li></ul></div></p></div></p><figure id="3f9ff9a7-d739-809e-8aa5-fcdb47af426d" dir="ltr"><div class="source"><a href="report.html">attachment:419212bd-3b5e-4a2d-83ae-933f7b0c558c:report.html</a></div></figure><p id="3f9ff9a7-d739-8094-8058-f64a82cf22b2" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
